@@ -59,7 +59,7 @@ public class FilterMaker {
 	}
 
 	private String[] cutLastCell(String[] array){
-		String[] nArray = new String[array.length -1];
+		String[] nArray = System.arraycopy();
 		for (int i=0; i<array.length -1; i++){
 			nArray[i] = array[i];
 		}
