@@ -1,5 +1,7 @@
 package fileprocessing;
 
+import fileprocessing.orders.AlphaOrder;
+
 import java.io.File;
 
 public class SectionProcessor {
@@ -23,11 +25,11 @@ public class SectionProcessor {
 			section.setFilter(new AllFilter());
 		}
 		try{
-			section.setOrder(oMaker.makeOrder(section.getOrderInput()));
+			section.setOrder(oMaker.makeOrder(section);
 		}
 		catch (Exception Type1Error){
 			printError(Section.);
-			section.setOrder(new abcOrder());
+			section.setOrder(AlphaOrder.instance());
 		}
 
 	}
