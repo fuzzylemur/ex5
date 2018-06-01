@@ -17,17 +17,15 @@ public class FilterMaker {
 
 	private final static String DELIMITER = "#";
 
-	private static FilterMaker maker;
+	private static FilterMaker maker = new FilterMaker();
 
-	private FilterMaker() {
-		maker = new FilterMaker();
-	}
+	private FilterMaker() {}
 
 	public static FilterMaker instance() {
 		return maker;
 	}
 
-	private double validateDouble(String doubleStr) throws TypeOneException {       // TODO verify stuff
+	private double validateDouble(String doubleStr) throws TypeOneException {
 		try {
 			double value = Double.parseDouble(doubleStr);
 			if (value < 0) throw new TypeOneException();
@@ -41,7 +39,6 @@ public class FilterMaker {
 		if (length != num) {
 			throw new TypeOneException();
 		}
-
 	}
 
 	private void betweenTest(double value1, double value2)throws TypeOneException{
@@ -58,17 +55,17 @@ public class FilterMaker {
 			throw new TypeOneException();
 	}
 
-	private String[] cutLastCell(String[] array){
-		String[] nArray = System.arraycopy();
-		for (int i=0; i<array.length -1; i++){
-			nArray[i] = array[i];
-		}
+	private String[] cutLastCell(String[] array) {
+
+		int nLength = array.length - 1;
+		String[] nArray = new String[nLength];
+		System.arraycopy(array, 0, nArray, 0, nLength);
 		return nArray;
 	}
 
-	public FileFilter makeFilter(String filterData) throws TypeOneException {
+	public FileFilter makeFilter(Section section) throws TypeOneException {
 
-		String[] split = filterData.split(DELIMITER);
+		String[] split = section.getFilterInput().split(DELIMITER);
 		boolean not = false;
 		if (split[split.length - 1].equals("NOT")){
 			if (split.length == 1) throw new TypeOneException();
@@ -126,7 +123,7 @@ public class FilterMaker {
 				boolean value = yesNoTest(split[1]);
 				return new Hidden(value, not);
 			}
-			case (ALL): {                                           // TODO not?
+			case (ALL): {
 				validateNumArgs(1, split.length);
 				return new All(not);
 			}

@@ -9,8 +9,8 @@ public class Between implements FileFilter{
 
     public Between(double value1, double value2, boolean not) {
         this.not = not;
-        value_low = value1/B_TO_KB;
-        value_high = value2/B_TO_KB;
+        value_low = value1*B_TO_KB;
+        value_high = value2*B_TO_KB;
     }
 
     public Boolean applyFilter(File file) {

@@ -7,15 +7,9 @@ public class CommandParser {
 
     private static final int NUM_LINES = 2;
 
-    private static CommandParser ourInstance;
-
-    public static CommandParser instance() {
-        return ourInstance;
-    }
-
-    private CommandParser() {
-        ourInstance = new CommandParser();
-    }
+    private static CommandParser myInstance = new CommandParser();
+    public static CommandParser instance() { return myInstance; }
+    private CommandParser() {}
 
     public ArrayList<Section> parseCommandFile(String commandFilePath) throws TypeTwoException {
 
@@ -24,7 +18,7 @@ public class CommandParser {
         String[] tempLines = new String[NUM_LINES];
         int[] lineNumbers = new int[NUM_LINES];
 
-        File commandFile = new File(commandFilePath);                   //TODO handle bad filepath?
+        File commandFile = new File(commandFilePath);
 
         try (FileReader reader = new FileReader(commandFile);
              BufferedReader buffReader = new BufferedReader(reader);
@@ -35,11 +29,11 @@ public class CommandParser {
             while (line != null) {
 
                 if (line.equals("FILTER")) {
-                    tempLines[0] = lineReader.readLine();           // read next line
+                    tempLines[0] = lineReader.readLine();
                     lineNumbers[0] = lineReader.getLineNumber();
                 }
                 else
-                    throw new TypeTwoException();
+                    throw new TypeTwoException("Bad sub-section format");
 
                 line = lineReader.readLine();
                 if (line.equals("ORDER")) {
@@ -52,7 +46,7 @@ public class CommandParser {
                         line = lineReader.readLine();
                     }
                 } else
-                    throw new TypeTwoException();
+                    throw new TypeTwoException("Bad sub-section format");
 
                 sectionArray.add(new Section(tempLines, lineNumbers));
                 tempLines = new String[NUM_LINES];
@@ -61,8 +55,11 @@ public class CommandParser {
             return sectionArray;
         }
 
-        catch (IOException | NullPointerException e) {
-            throw new TypeTwoException();
+        catch (IOException e) {
+            throw new TypeTwoException("Error accessing command file");
+        }
+        catch (NullPointerException e) {
+            throw new TypeTwoException("Bad command file format");
         }
     }
 

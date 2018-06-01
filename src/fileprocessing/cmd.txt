@@ -1,0 +1,4 @@
+FILTER
+greater_than#40#NOT
+ORDER
+size

@@ -4,16 +4,15 @@ import fileprocessing.orders.*;
 
 public class OrderMaker {
 
-	private static final String ABC = "abc";
+	private static final String ABS = "abs";
 	private static final String SIZE = "size";
 	private static final String TYPE = "type";
 
 	private final static String DELIMITER = "#";
 
-	private static OrderMaker maker;
+	private static OrderMaker maker = new OrderMaker();
 
 	private OrderMaker() {
-		maker = new OrderMaker();
 	}
 
 	public static OrderMaker instance() {
@@ -22,6 +21,8 @@ public class OrderMaker {
 
 	public FileOrder makeOrder(Section section) throws TypeOneException {
 
+		if (section.getOrderInput() == null) return AlphaOrder.instance(); // when there is no order at all
+
 		String[] split = section.getOrderInput().split(DELIMITER);
 		if (split[split.length - 1].equals("REVERSE")) {
 			section.setReverseOrder(true);
@@ -29,7 +30,7 @@ public class OrderMaker {
 
 		switch (split[0]) {
 
-			case (ABC): {
+			case (ABS): {
 				return AlphaOrder.instance();
 			}
 			case (SIZE): {

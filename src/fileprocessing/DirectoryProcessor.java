@@ -2,6 +2,7 @@ package fileprocessing;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DirectoryProcessor {
 
@@ -18,20 +19,22 @@ public class DirectoryProcessor {
         myProccessor = SectionProcessor.instance();
         this.sourceDir = sourceDir;
         this.commandFile = commandFile;
+        sectionArray = new ArrayList<>();
 
         File source = new File(this.sourceDir);
         fileList = source.listFiles();
 
         getSectionArray();
 
+
     }
 
     private void getSectionArray(){
         try {
-            sectionArray = myParser.parseCommandFile(sourceDir);
+            sectionArray = myParser.parseCommandFile(commandFile);
         }
         catch (TypeTwoException e){
-
+            System.err.println(e.getMessage());
         }
     }
 
@@ -46,21 +49,18 @@ public class DirectoryProcessor {
         }
     }
 
-    private void printFileList(ArrayList<File> filteredList, boolean reverse) {
+    private void printFileList(ArrayList<File> sortedList, boolean reverse) {
 
-        if (!reverse) {
-            for (File file : filteredList) {
+        if (reverse)
+            Collections.reverse(sortedList);
+
+        for (File file : sortedList)
                 System.out.println(file.getName());
-            }
-
-        } else {
-            for (int i = filteredList.size()-1; i>=0; i--){
-                System.out.println(fileList[i].getName());
-            }
-        }
     }
 
     public static void main(String[] args) {
+
+        // validate args
 
         DirectoryProcessor dirProcessor = new DirectoryProcessor(args[0], args[1]);
         dirProcessor.processSections();

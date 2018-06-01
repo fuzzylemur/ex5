@@ -8,11 +8,10 @@ public class GreaterThan implements FileFilter{
 
     public GreaterThan(double value, boolean not) {
         this.not = not;
-        this.value = value/B_TO_KB;
+        this.value = value * B_TO_KB;
     }
 
     public Boolean applyFilter(File file) {
-
         return ((file.length() >= value) != not);
     }
 }
