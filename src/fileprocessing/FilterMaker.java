@@ -1,5 +1,6 @@
 package fileprocessing;
 import fileprocessing.filters.*;
+import fileprocessing.filters.Filter;
 
 public class FilterMaker {
 
@@ -63,7 +64,7 @@ public class FilterMaker {
 		return nArray;
 	}
 
-	public FileFilter makeFilter(Section section) throws TypeOneException {
+	public Filter makeFilter(Section section) throws TypeOneException {
 
 		String[] split = section.getFilterInput().split(DELIMITER);
 		boolean not = false;

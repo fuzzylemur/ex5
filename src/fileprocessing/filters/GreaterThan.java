@@ -1,7 +1,7 @@
 package fileprocessing.filters;
 import java.io.File;
 
-public class GreaterThan implements FileFilter{
+public class GreaterThan implements Filter {
 
     private boolean not;
     private double value;

@@ -1,7 +1,7 @@
 package fileprocessing.filters;
 import java.io.File;
 
-public class Between implements FileFilter{
+public class Between implements Filter {
 
     private boolean not;
     private double value_low;

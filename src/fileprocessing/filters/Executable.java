@@ -1,7 +1,7 @@
 package fileprocessing.filters;
 import java.io.File;
 
-public class Executable implements FileFilter{
+public class Executable implements Filter {
 
     private boolean not;
     private boolean value;

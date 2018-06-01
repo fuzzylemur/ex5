@@ -1,7 +1,7 @@
 package fileprocessing.filters;
 import java.io.File;
 
-public class Writable implements FileFilter{
+public class Writable implements Filter {
 
     private boolean not;
     private boolean value;

@@ -1,5 +1,5 @@
 package fileprocessing;
-import fileprocessing.filters.*;
+import fileprocessing.filters.Filter;
 import fileprocessing.orders.*;
 
 public class Section {
@@ -9,7 +9,7 @@ public class Section {
     private boolean reverseOrder;
     private int[] lineNumbers;
 
-    private FileFilter myFilter;
+    private Filter myFilter;
     private FileOrder myOrder;
 
 
@@ -19,7 +19,7 @@ public class Section {
         this.lineNumbers = lineNumbers;
     }
 
-    public FileFilter getFilter() {
+    public Filter getFilter() {
         return myFilter;
     }
 
@@ -27,7 +27,7 @@ public class Section {
         return myOrder;
     }
 
-    public void setFilter(FileFilter filter) {
+    public void setFilter(Filter filter) {
         myFilter = filter;
     }
 

@@ -12,7 +12,7 @@ public class TypeTwoException extends Exception {
     }
 
     public String getMessage(){
-        return MSG + msgDetails + "/n";
+        return MSG + msgDetails + "\n";
     }
 
 }

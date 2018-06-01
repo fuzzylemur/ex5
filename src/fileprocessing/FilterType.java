@@ -1,7 +1,7 @@
 package fileprocessing;
 import java.util.Iterator;
 
-public enum Filter {
+public enum FilterType {
 
 
     GREATER_THAN ("greater_than"),
@@ -18,7 +18,7 @@ public enum Filter {
 
     String stringRep;
 
-    Filter(String stringRep) {
+    FilterType(String stringRep) {
         this.stringRep = stringRep;
     }
 

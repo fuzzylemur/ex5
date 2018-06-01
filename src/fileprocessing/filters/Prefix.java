@@ -1,7 +1,7 @@
 package fileprocessing.filters;
 import java.io.File;
 
-public class Prefix implements FileFilter{
+public class Prefix implements Filter {
 
     private boolean not;
     private String value;

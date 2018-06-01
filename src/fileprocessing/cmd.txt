@@ -1,4 +1,4 @@
 FILTER
-greater_than#40#NOT
+between#10#-5
 ORDER
 size

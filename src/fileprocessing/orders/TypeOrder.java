@@ -3,18 +3,16 @@ import java.io.File;
 
 public class TypeOrder implements FileOrder {
 
-    private static TypeOrder myInstance;
+    private static TypeOrder myInstance = new TypeOrder();
 
-    private TypeOrder(){
-        myInstance = new TypeOrder();
-    }
+    private TypeOrder(){}
     public static TypeOrder instance(){return myInstance;}
 
     public int compare(File file1, File file2){
 
-        String[] temp = file1.getName().split(".");
+        String[] temp = file1.getName().split("\\.");
         String type1 = temp[temp.length-1];
-        temp = file2.getName().split(".");
+        temp = file2.getName().split("\\.");
         String type2 = temp[temp.length-1];
 
         if (type1.equals(type2)){
