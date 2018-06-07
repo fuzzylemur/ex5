@@ -5,11 +5,18 @@ import java.util.ArrayList;
 
 public class CommandParser {
 
-    private final int NUM_LINES = 2;
+    private static final int NUM_LINES = 2;
 
-    //private static CommandParser myInstance = new CommandParser();
-    //public static CommandParser instance() { return myInstance; }
-    public CommandParser() {}
+    private static final String FILTER_LINE = "FILTER";
+    private static final String ORDER_LINE = "ORDER";
+
+    private static final String MSG_SUB_FORMAT = "Bad sub-section format";
+    private static final String MSG_EMPTY = "Empty command file";
+    private static final String MSG_ERR_ACCESS = "Error accessing command file";
+
+    private static CommandParser myInstance = new CommandParser();
+    public static CommandParser instance() { return myInstance; }
+    private CommandParser() {}
 
     public ArrayList<Section> parseCommandFile(String commandFilePath) throws TypeTwoException {
 
@@ -28,17 +35,17 @@ public class CommandParser {
 
             while (line != null) {
 
-                if (line.equals("FILTER")) {
+                if (line.equals(FILTER_LINE)) {
                     tempLines[0] = lineReader.readLine();
                     lineNumbers[0] = lineReader.getLineNumber();
                 }
                 else
-                    throw new TypeTwoException("Bad sub-section format");
+                    throw new TypeTwoException(MSG_SUB_FORMAT);         // no FILTER at section start
 
                 line = lineReader.readLine();
-                if (line.equals("ORDER")) {
+                if (line.equals(ORDER_LINE)) {
                     line = lineReader.readLine();
-                    if (line == null ||line.equals("FILTER"))
+                    if (line == null ||line.equals(FILTER_LINE))
                         tempLines[1] = null;
                     else {
                         tempLines[1] = line;
@@ -46,7 +53,7 @@ public class CommandParser {
                         line = lineReader.readLine();
                     }
                 } else
-                    throw new TypeTwoException("Bad sub-section format");
+                    throw new TypeTwoException(MSG_SUB_FORMAT);         // no ORDER sub-section
 
                 sectionArray.add(new Section(tempLines, lineNumbers));
                 tempLines = new String[NUM_LINES];
@@ -55,11 +62,11 @@ public class CommandParser {
             return sectionArray;
         }
 
-        catch (IOException e) {
-            throw new TypeTwoException("Error accessing command file");
+        catch (IOException e) {                             // inaccessible command file
+            throw new TypeTwoException(MSG_ERR_ACCESS);
         }
-        catch (NullPointerException e) {
-            throw new TypeTwoException("Bad command file format");
+        catch (NullPointerException e) {                    // empty command file
+            throw new TypeTwoException(MSG_EMPTY);
         }
     }
 }

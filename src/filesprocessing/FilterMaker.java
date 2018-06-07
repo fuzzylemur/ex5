@@ -1,4 +1,5 @@
 package filesprocessing;
+
 import filesprocessing.filters.*;
 import filesprocessing.filters.Filter;
 
@@ -18,36 +19,40 @@ public class FilterMaker {
 
 	private final static String DELIMITER = "#";
 
-	private static FilterMaker maker = new FilterMaker();
+	private static FilterMaker myInstance = new FilterMaker();
+	public static FilterMaker instance() {return myInstance;}
 
 	private FilterMaker() {}
 
-	public static FilterMaker instance() {
-		return maker;
-	}
 
 	private double validateDouble(String doubleStr) throws TypeOneException {
+
 		try {
 			double value = Double.parseDouble(doubleStr);
-			if (value < 0) throw new TypeOneException();
+			if (value < 0)
+				throw new TypeOneException();
 			return value;
+
 		} catch (NumberFormatException exc) {
 			throw new TypeOneException();
 		}
 	}
 
 	private void validateNumArgs(int num, int length) throws TypeOneException {
+
 		if (length != num) {
 			throw new TypeOneException();
 		}
 	}
 
 	private void betweenTest(double value1, double value2)throws TypeOneException{
+
 		if (value1 > value2)
 			throw new TypeOneException();
 	}
 
 	private boolean yesNoTest(String value)throws TypeOneException{
+
 		if (value.equals("YES"))
 			return true;
 		else if (value.equals("NO"))

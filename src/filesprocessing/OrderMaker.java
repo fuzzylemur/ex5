@@ -10,18 +10,16 @@ public class OrderMaker {
 
 	private final static String DELIMITER = "#";
 
-	private static OrderMaker maker = new OrderMaker();
+	private static OrderMaker myInstance = new OrderMaker();
+	public static OrderMaker instance() {return myInstance;}
 
-	private OrderMaker() {
-	}
+	private OrderMaker() {}
 
-	public static OrderMaker instance() {
-		return maker;
-	}
 
 	public FileOrder makeOrder(Section section) throws TypeOneException {
 
-		if (section.getOrderInput() == null) return AlphaOrder.instance(); // when there is no order at all
+		if (section.getOrderInput() == null) 			// no order specified in command file
+			return AlphaOrder.instance();
 
 		String[] split = section.getOrderInput().split(DELIMITER);
 		if (split[split.length - 1].equals("REVERSE")) {

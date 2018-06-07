@@ -12,6 +12,6 @@ public class GreaterThan implements Filter {
     }
 
     public Boolean applyFilter(File file) {
-        return ((file.length() >= value) != not);
+        return ((file.length() > value) != not);
     }
 }

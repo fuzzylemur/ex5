@@ -1,4 +1,3 @@
-package filesprocessing;
 
 public enum FilterType {
 

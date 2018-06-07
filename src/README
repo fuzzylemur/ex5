@@ -1,2 +1,114 @@
-jonathanzd
 giladam
+jonathanzed
+
+=============================
+=      File description     =
+=============================
+
+package:    filesprocessing
+
+    classes:        DirectoryProcessor
+                    CommandParser
+                    SectionProcessor
+                    FilterMaker
+                    OrderMaker
+                    Section
+                    TypeOneException
+                    TypeTwoException
+
+    sub-package:    filters
+        interface:      Filter
+        classes:        All
+                        Between
+                        Contains
+                        Directory
+                        Executable
+                        FileName
+                        GreaterThan
+                        Hidden
+                        Prefix
+                        SmallerThan
+                        Suffix
+                        Writable
+
+    sub-package:    orders
+        interface:      FileOrder
+        classes:        AlphaOrder
+                        SizeOrder
+                        TypeOrder
+
+=============================
+=       Program Flow        =
+=============================
+
+DirectoryProcessor is the main object/program, it receives the user input (source directory and command file
+paths), loads the file list of the source directory, instantiates and handles objects of class CommandParser
+and SectionProcessor which preform the bulk of the program.
+
+CommandParser reads the given command file for the requested processing action, in the defined format, and
+creates for each section in the command file a Section object that holds the input lines for the requested
+filter and order in this section (without yet verifying these lines are valid). The output of the object
+is an ArrayList of Section object as defined in the command file.
+
+SectionProcessor prepares the Section objects for the required processing. It is here that each Section is
+given a Filter object and an Order object which define the processing to be made in this Section. This is
+done in two factory objects: FilterMaker and OrderMaker. These objects receive the input lines for each
+section (as read by the CommandParser), validate their correctness and create the appropriate Filter/Order
+object, which are then stored in the Section object.
+
+FilterMaker and OrderMaker are the point of single choice for the various filtering/ordering options, they
+hold all the known choices for these objects and all validating methods for TypeOneExceptions. In case of
+these exceptions (bad format or names in the command file) CommandParser will catch those, and give the
+Section with problems the default Filter/Order object, as well as print a message regarding the line in
+which the error was found.
+
+The DirectoryProcessor handles Sections in the array received from CommandParser one by one: sending it to
+SectionProcessor (which prints warnings if needed), filtering the file list with the relevant Filter,
+ordering the filtered file list in the required order and printing the output list.
+
+=============================
+=    Exception Hierarchy    =
+=============================
+
++ TypeOneExceptions
+issued when the program encounters a non-valid command for a filter/order in the
+command file (wrong name, invalid parameters), and these result in printing a warning and processing the
+section with default filter and order. As these exceptions do not stop the program from running it made
+sense to catch them as low in the hierarchy as possible. These exceptions are thrown by OrderMaker and
+FilterMaker when validating the inputs for each of them, and caught by SectionProcessor which prints the
+message with the matching line number (as stored in the section object). Dealing with these exceptions
+inside the maker objects seemed to clumsy, as there are many validating methods that throw them, so we've
+opted to deal with them one level up in the SectionProcessor. Line numbers for the inputs are kept in the
+relevant Section object as received from CommandParser, this allowed to distance the validations from the
+parsing itself.
+
++ TypeTwoExceptions
+those that involve IO errors: invalid args, inaccessible files, and bad command file
+format (as opposed to bad filter/order line format in TypeOneExceptions). Those stop the program and don't
+produce any output. These errors are thrown by the CommandParser (or in the main method in the case of
+invalid args) and are caught in the main method of DirectoryProcessor, so that the program can stop running
+after catching them (without calling Sys.exit). TypeTwoExceptions are thrown with a message regarding the
+details of the error (which are defined in CommandParser which throws them).
+
+=============================
+=          Design           =
+=============================
+
+All classes that don't require multiple objects to be made were written as singletons (CommandParser,
+SectionProcessor, FilterMaker, OrderMaker and all Order objects). This does not influence the implementation
+too much, but makes sense from a design perspective as these objects are actually the functional building
+blocks of the program and shouldn't be created more than once.
+
+SectionProcessor class could have been avoided and have it's functionality be inside the DirectoryProcessor,
+but it felt more natural and organized to delegate the filter/order making, together with all the validations
+and TypeOneException catching, to an object lower in the hierarchy than the main DirectoryProcessor. So the
+main method does not have to worry itself with TypeOneExceptions, which are warnings that don't stop the
+running of the program. We were also pretty excited about having a singleton which is composed of two
+singletons (one of which also creates singletons OMG).
+
+filter/order: Interface vs abstract?
+
+=============================
+=          Sorting          =
+=============================
+

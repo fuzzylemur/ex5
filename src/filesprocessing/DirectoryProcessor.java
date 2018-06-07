@@ -8,6 +8,8 @@ import filesprocessing.filters.*;
 
 public class DirectoryProcessor {
 
+    private static final String MSG_NUM_ARGS = "Invalid number of arguments";
+
     private CommandParser myParser;
     private SectionProcessor myProcessor;
 
@@ -20,7 +22,7 @@ public class DirectoryProcessor {
 
     private DirectoryProcessor(String sourceDir, String commandFile){
 
-        myParser = new CommandParser();
+        myParser = CommandParser.instance();
         myProcessor = SectionProcessor.instance();
         this.sourceDir = sourceDir;
         this.commandFile = commandFile;
@@ -32,7 +34,6 @@ public class DirectoryProcessor {
         catch (NullPointerException e){
             System.exit(0);
         }
-        getSectionArray();
     }
 
     private void loadFileList() throws NullPointerException {
@@ -49,13 +50,9 @@ public class DirectoryProcessor {
         fileArray = dirFilter.filterFiles(fileArray);
     }
 
-    private void getSectionArray(){
-        try {
-            sectionArray = myParser.parseCommandFile(commandFile);
-        }
-        catch (TypeTwoException ex){
-            System.err.println(ex.getMessage());
-        }
+    private void getSectionArray() throws TypeTwoException{
+
+        sectionArray = myParser.parseCommandFile(commandFile);
     }
 
     private void processSections(){
@@ -79,22 +76,29 @@ public class DirectoryProcessor {
     }
 
     private static void validateArgs(String[] args) throws TypeTwoException{
+
         if (args.length !=2){
-            throw new TypeTwoException("Invalid number of arguments");
+            throw new TypeTwoException(MSG_NUM_ARGS);
         }
     }
 
     public static void main(String[] args) {
+
         try {
             validateArgs(args);
         } catch (TypeTwoException ex){
             System.err.println(ex.getMessage());
-            System.exit(1);
+            return;
         }
-
         DirectoryProcessor dirProcessor = new DirectoryProcessor(args[0], args[1]);
-        dirProcessor.processSections();
 
+        try {
+            dirProcessor.getSectionArray();
+        } catch (TypeTwoException ex) {
+            System.err.println(ex.getMessage());
+            return;
+        }
+        dirProcessor.processSections();
     }
 
 }

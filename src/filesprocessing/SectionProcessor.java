@@ -1,12 +1,16 @@
 package filesprocessing;
 
-import filesprocessing.filters.All;
-import filesprocessing.orders.AlphaOrder;
-
+import filesprocessing.filters.*;
+import filesprocessing.orders.*;
 
 public class SectionProcessor {
 
-	private static SectionProcessor processor = new SectionProcessor();
+	private static final Filter DEFAULT_FILTER = new All(false);
+	private static final FileOrder DEFAULT_ORDER = AlphaOrder.instance();
+
+	private static SectionProcessor myInstance = new SectionProcessor();
+	public static SectionProcessor instance() {return myInstance;}
+
 	private FilterMaker fMaker;
 	private OrderMaker oMaker;
 
@@ -23,20 +27,16 @@ public class SectionProcessor {
 		}
 		catch (TypeOneException ex){
 			System.err.println(ex.getMessage() + section.getFilterLineNum());
-			section.setFilter(new All(false));
+			section.setFilter(DEFAULT_FILTER);
 		}
+
 		try {
 			section.setOrder(oMaker.makeOrder(section));
 		}
 		catch (TypeOneException ex){
 			System.err.println(ex.getMessage() + section.getOrderLineNum());
-			section.setOrder(AlphaOrder.instance());
+			section.setOrder(DEFAULT_ORDER);
 		}
 
-	}
-
-
-	public static SectionProcessor instance(){
-		return processor;
 	}
 }
