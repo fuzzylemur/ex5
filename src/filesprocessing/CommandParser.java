@@ -3,13 +3,13 @@ package filesprocessing;
 import java.io.*;
 import java.util.ArrayList;
 
-/**
+/*
  * CommandParser object receives the path to the command file and parses it to get the desired
  * filter and order for each section to be processed by DirectoryProcessor. If there is a problem
  * with the command file (bad format, no access) a TypeTwoException will be thrown from the method
  * parseCommandFile.
  */
-public class CommandParser {
+class CommandParser {
 
 	/* Class Constants */
 	private static final int NUM_LINES = 2;
@@ -25,13 +25,13 @@ public class CommandParser {
 	/* Default singleton constructor */
 	private CommandParser() {}
 
-	/**
+	/*
 	 * singleton method for getting the instance of this object
 	 * @return CommandParser instance
 	 */
-	public static CommandParser instance() { return myInstance; }
+	static CommandParser instance() { return myInstance; }
 
-	/**
+	/*
 	 * The method for parsing the command file in the given path, to an ArrayList of Section
 	 * objects representing the desired processing operations. Utilises java's LineNumberReader
 	 * to read the command file.
@@ -40,7 +40,7 @@ public class CommandParser {
 	 * @return ArrayList of Section objects parsed from the command file
 	 * @throws TypeTwoException in case of bad file format, empty or inaccessible command file
 	 */
-	public ArrayList<Section> parseCommandFile(String commandFilePath) throws TypeTwoException {
+	ArrayList<Section> parseCommandFile(String commandFilePath) throws TypeTwoException {
 
 		ArrayList<Section> sectionArray = new ArrayList<>();
 

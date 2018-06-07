@@ -5,14 +5,14 @@ import filesprocessing.orders.*;
 import java.io.File;
 import java.util.Comparator;
 
-/**
- * A singelton class, responisibale for validating and creating order instances.
+/*
+ * A singleton class, responsible for validating and creating order instances.
  * It's main method, makeOrder(Section section), acts as a order factory by
- * analyzing the String input and creating the apropriate order.
+ * analyzing the String input and creating the appropriate order.
  *
  * @authors Gil Adam, Jonathan Zedaka
  */
-public class OrderMaker {
+class OrderMaker {
 
 	//-------------------------Class Constants-------------------------------//
 	private static final String ABS = "abs";
@@ -24,28 +24,30 @@ public class OrderMaker {
 
 	private static OrderMaker myInstance = new OrderMaker();
 
-	/* A private defualt constractor .*/
+	/* A private default constructor .*/
 	private OrderMaker() {}
 
-	/** @return the class one and only instance*/
-	public static OrderMaker instance() {return myInstance;}
+	/* @return the class one and only instance */
+	static OrderMaker instance() {return myInstance;}
 
-	/**
+	/*
 	 * The Main function of this class. Receives a section instance and
 	 * process its order input data (from the command file) in order to validate
-	 * and create the apropriate order type.
+	 * and create the appropriate order type.
 	 * The function throws TypeOneException if the order data was corrupted in any way.
 	 *
 	 * @param section The section to create the order to.
 	 * @return a FileOrder instance according to the command file data.
 	 */
-	public Comparator<File> makeOrder(Section section) throws TypeOneException {
+	Comparator<File> makeOrder(Section section) throws TypeOneException {
 
 		if (section.getOrderInput() == null) 			// If no order specified in command file
 			return AlphaOrder.instance();
 
 		String[] split = section.getOrderInput().split(DELIMITER);
-		if (split[split.length - 1].equals(REVERSE_STR)) { // Cheks if the order data contains REVERSE in the last cell.
+
+		// Checks if the order data contains REVERSE in the last cell.
+		if (split[split.length - 1].equals(REVERSE_STR)) {
 			section.setReverseOrder(true); // Is so, we set the section's reverseOrder variable to true.
 		}
 

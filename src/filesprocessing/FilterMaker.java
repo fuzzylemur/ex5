@@ -4,9 +4,9 @@ import filesprocessing.filters.*;
 import filesprocessing.filters.Filter;
 
 /*
- * A singleton class, responisibale for validating and creating filter instances.
+ * A singleton class, responsible for validating and creating filter instances.
  * It's main method, makeFilter(Section section), acts as a filter factory by
- * analyzing the String input and creating the apropriate filter.
+ * analyzing the String input and creating the appropriate filter.
  *
  * @authors Gil Adam, Jonathan Zedaka
  */
@@ -32,14 +32,14 @@ class FilterMaker {
 
 	private static FilterMaker myInstance = new FilterMaker();
 
-	/* A private defualt constractor .*/
+	/* A private default constructor .*/
 	private FilterMaker() {}
 
-	/** @return the class one and only instance*/
-	public static FilterMaker instance() {return myInstance;}
+	/* @return the class one and only instance*/
+	static FilterMaker instance() {return myInstance;}
 
 	/*
-	 * This private method is responsibale for cheking whether a given string can be converted to double.
+	 * This private method is responsible for checking whether a given string can be converted to double.
 	 * Throws TypeOneException if the conversion fails.
 	 *
 	 * @param doubleStr a string to validate if it can be converted to double.
@@ -62,7 +62,7 @@ class FilterMaker {
 	 * Validates that the given array length equals the wantes num of args represent by the numargs integer.
 	 * Throws TypeOneException if there is no match.
 	 *
-	 * @param numargs the expectes length of the array.
+	 * @param numargs the expected length of the array.
 	 * @param length the length og the args array.
 	 */
 	private void validateNumArgs(int numargs, int length) throws TypeOneException {
@@ -77,7 +77,7 @@ class FilterMaker {
 	 * Throws TypeOneException otherwise.
 	 *
 	 * @param value1 The first double value.
-	 * @param value2 The seconed double value.
+	 * @param value2 The second double value.
 	 */
 	private void betweenTest(double value1, double value2)throws TypeOneException{
 
@@ -115,30 +115,32 @@ class FilterMaker {
 		return nArray;
 	}
 
-	/**
+	/*
 	 * The Main function of this class. Receives a section instance and
 	 * process its Filter input data (from the command file) in order to validate
-	 * and create the apropriate filter type.
+	 * and create the appropriate filter type.
 	 * The function throws TypeOneException if the filter data was corrupted in any way.
 	 *
 	 * @param section The section to create the filter to.
 	 * @return a filter instance according to the command file data.
 	 */
-	public Filter makeFilter(Section section) throws TypeOneException {
+	Filter makeFilter(Section section) throws TypeOneException {
 
 		String[] split = section.getFilterInput().split(DELIMITER);
 		boolean not = false;
-		if (split[split.length - 1].equals(NOT_STR)){ // Cheks if the filter data contains NOT in the last cell.
+
+		// Cheks if the filter data contains NOT in the last cell.
+		if (split[split.length - 1].equals(NOT_STR)){
 			if (split.length == 1) throw new TypeOneException(); // In case the filter data is only "NOT".
 			not = true;
-			split = cutLastCell(split); // Cut the last cell of the data array before contiuing to further testing.
+			split = cutLastCell(split); // Cut the last cell of the data array
 		}
 
 		switch (split[0]) { // Here, we make sure that the filter type is one of the legal constant types.
 							// We also make sure there are no extra data like #SMALLER_THAN#8#9#76#7
 			case (GREATER_THAN): {
 				validateNumArgs(2, split.length);
-				double value = validateDouble(split[1]); // validates that the double is a real positive double.
+				double value = validateDouble(split[1]); 	// validates the double
 				return new GreaterThan(value, not);
 			}
 			case (SMALLER_THAN): {
@@ -188,7 +190,7 @@ class FilterMaker {
 				validateNumArgs(1, split.length);
 				return new All(not);
 			}
-		} // If we didnt fins any match we throw TypeOneException.
+		} // If we didn't find any match we throw TypeOneException.
 		throw new TypeOneException();
 	}
 }

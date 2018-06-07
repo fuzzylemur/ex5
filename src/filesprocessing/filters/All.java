@@ -24,7 +24,7 @@ public class All implements Filter {
 	 * @param file File to check
 	 * @return True for all files.
 	 */
-	public Boolean applyFilter(File file) {
+	public Boolean checkFile(File file) {
 
 		return (!not);
 	}

@@ -3,9 +3,9 @@ import java.io.File;
 import java.util.Comparator;
 
 /**
- * A singelton class, implements java's Comparator<File> interface.
- * this Singelton has one method - compare - which can be use to sort a
- * Data stracture in a ABS order.
+ * A singleton class, implements java's Comparator<File> interface.
+ * this singleton has one method - compare - which can be use to sort a
+ * Data structure in a ABS order.
  *
  * @authors Gil Adam, Jonathan Zedaka
  */
@@ -14,7 +14,7 @@ public class AlphaOrder implements Comparator<File> {
 	//-------------------------Class Constants-------------------------------//
 	private static AlphaOrder myInstance = new AlphaOrder();
 
-	/* A private defualt constractor .*/
+	/* A private default constructor .*/
 	private AlphaOrder(){}
 
 	/** @return the class one and only instance*/

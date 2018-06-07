@@ -3,9 +3,9 @@ import java.io.File;
 import java.util.Comparator;
 
 /**
- * A singelton class, implements java's Comparator<File> interface.
- * This Singelton has one method - compare - which can be use to sort a
- * Data stracture according to the type of the files in it.
+ * A singleton class, implements java's Comparator<File> interface.
+ * This singleton has one method - compare - which can be use to sort a
+ * Data structure according to the type of the files in it.
  *
  * @authors Gil Adam, Jonathan Zedaka
  */
@@ -14,7 +14,7 @@ public class TypeOrder implements Comparator<File> {
 	//-------------------------Class Constants-------------------------------//
 	private static TypeOrder myInstance = new TypeOrder();
 
-	/* A private defualt constractor .*/
+	/* A private default constructor .*/
 	private TypeOrder(){}
 
 	/** @return the class one and only instance*/

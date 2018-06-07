@@ -26,7 +26,7 @@ public class SmallerThan implements Filter {
      * @param file File to check
      * @return True if file satisfies filter, false otherwise
      */
-    public Boolean applyFilter(File file) {
+    public Boolean checkFile(File file) {
 
         return ((file.length() < value) != not);
     }

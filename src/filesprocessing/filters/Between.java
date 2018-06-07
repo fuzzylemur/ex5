@@ -29,7 +29,7 @@ public class Between implements Filter {
 	 * @param file File to check
 	 * @return True if file satisfies filter, false otherwise
 	 */
-	public Boolean applyFilter(File file) {
+	public Boolean checkFile(File file) {
 
 		return (((file.length() >= value_low)&&(file.length() <= value_high)) != not);
 	}
