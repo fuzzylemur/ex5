@@ -3,8 +3,16 @@ package filesprocessing;
 import filesprocessing.filters.*;
 import filesprocessing.filters.Filter;
 
+/**
+ * A singelton class, responisibale for validating and creating filter instances.
+ * It's main method, makeFilter(Section section), acts as a filter factory by
+ * analyzing the String input and creating the apropriate filter.
+ *
+ * @authors Gil Adam, Jonathan Zedaka
+ */
 public class FilterMaker {
 
+	//-------------------------Class Constants-------------------------------//
 	private static final String GREATER_THAN = "greater_than";
 	private static final String SMALLER_THAN = "smaller_than";
 	private static final String BETWEEN = "between";
@@ -18,13 +26,25 @@ public class FilterMaker {
 	private static final String ALL = "all";
 
 	private final static String DELIMITER = "#";
+	private final static String YES_STR = "YES";
+	private final static String NO_STR = "NO";
+	private final static String NOT_STR = "NOT";
 
 	private static FilterMaker myInstance = new FilterMaker();
-	public static FilterMaker instance() {return myInstance;}
 
+	/* A private defualt constractor .*/
 	private FilterMaker() {}
 
+	/** @return the class one and only instance*/
+	public static FilterMaker instance() {return myInstance;}
 
+	/*
+	 * This private method is responsibale for cheking whether a given string can be converted to double.
+	 * Throws TypeOneException if the conversion fails.
+	 *
+	 * @param doubleStr a string to validate if it can be converted to double.
+	 * @return double if it can, TypeOneException otherwise.
+	 */
 	private double validateDouble(String doubleStr) throws TypeOneException {
 
 		try {
@@ -33,34 +53,60 @@ public class FilterMaker {
 				throw new TypeOneException();
 			return value;
 
-		} catch (NumberFormatException exc) {
+		} catch (NumberFormatException exc) { // Throws TypeOneException if the double parse failed.
 			throw new TypeOneException();
 		}
 	}
 
-	private void validateNumArgs(int num, int length) throws TypeOneException {
+	/*
+	 * Validates that the given array length equals the wantes num of args represent by the numargs integer.
+	 * Throws TypeOneException if there is no match.
+	 *
+	 * @param numargs the expectes length of the array.
+	 * @param length the length og the args array.
+	 */
+	private void validateNumArgs(int numargs, int length) throws TypeOneException {
 
-		if (length != num) {
+		if (length != numargs) {
 			throw new TypeOneException();
 		}
 	}
 
+	/*
+	 * Validates that the value1 is strictly greater then value2.
+	 * Throws TypeOneException otherwise.
+	 *
+	 * @param value1 The first double value.
+	 * @param value2 The seconed double value.
+	 */
 	private void betweenTest(double value1, double value2)throws TypeOneException{
 
 		if (value1 > value2)
 			throw new TypeOneException();
 	}
 
+	/*
+	 * Checks if the given string value is exactly "YES" or "NO".
+	 * Throws TypeOneException otherwise.
+	 *
+	 * @param value the string to test.
+	 */
 	private boolean yesNoTest(String value)throws TypeOneException{
 
-		if (value.equals("YES"))
+		if (value.equals(YES_STR))
 			return true;
-		else if (value.equals("NO"))
+		else if (value.equals(NO_STR))
 			return false;
 		else
 			throw new TypeOneException();
 	}
 
+	/*
+	 * Cuts the last cell of the given array.
+	 *
+	 * @param array the array to cut.
+	 * @return the new array without the last cell.
+	 */
 	private String[] cutLastCell(String[] array) {
 
 		int nLength = array.length - 1;
@@ -69,21 +115,30 @@ public class FilterMaker {
 		return nArray;
 	}
 
+	/**
+	 * The Main function of this class. Receives a section instance and
+	 * process its Filter input data (from the command file) in order to validate
+	 * and create the apropriate filter type.
+	 * The function throws TypeOneException if the filter data was corrupted in any way.
+	 *
+	 * @param section The section to create the filter to.
+	 * @return a filter instance according to the command file data.
+	 */
 	public Filter makeFilter(Section section) throws TypeOneException {
 
 		String[] split = section.getFilterInput().split(DELIMITER);
 		boolean not = false;
-		if (split[split.length - 1].equals("NOT")){
-			if (split.length == 1) throw new TypeOneException();
+		if (split[split.length - 1].equals(NOT_STR)){ // Cheks if the filter data contains NOT in the last cell.
+			if (split.length == 1) throw new TypeOneException(); // In case the filter data is only "NOT".
 			not = true;
-			split = cutLastCell(split);
+			split = cutLastCell(split); // Cut the last cell of the data array before contiuing to further testing.
 		}
 
-		switch (split[0]) {
-
+		switch (split[0]) { // Here, we make sure that the filter type is one of the legal constant types.
+							// We also make sure there are no extra data like #SMALLER_THAN#8#9#76#7
 			case (GREATER_THAN): {
 				validateNumArgs(2, split.length);
-				double value = validateDouble(split[1]);
+				double value = validateDouble(split[1]); // validates that the double is a real positive double.
 				return new GreaterThan(value, not);
 			}
 			case (SMALLER_THAN): {
@@ -133,7 +188,7 @@ public class FilterMaker {
 				validateNumArgs(1, split.length);
 				return new All(not);
 			}
-		}
+		} // If we didnt fins any match we throw TypeOneException.
 		throw new TypeOneException();
 	}
 }
