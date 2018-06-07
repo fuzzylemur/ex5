@@ -3,11 +3,11 @@ import java.io.File;
 import java.util.Comparator;
 
 /**
- * A singleton class, implements java's Comparator<File> interface.
+ * A singleton class, implements java's Comparator interface.
  * this Singleton has one method - compare - which can be use to sort a
  * Data structure according to the size of the files in it.
  *
- * @authors Gil Adam, Jonathan Zedaka
+ * @author Gil Adam, Jonathan Zedaka
  */
 public class SizeOrder implements Comparator<File> {
 

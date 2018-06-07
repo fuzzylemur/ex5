@@ -13,7 +13,7 @@ package:    filesprocessing
                     FilterMaker
                     OrderMaker
                     Section
-                    TypeOneException
+    exceptions:     TypeOneException
                     TypeTwoException
 
     sub-package:    filters

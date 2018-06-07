@@ -1,6 +1,9 @@
 package filesprocessing.filters;
 import java.io.File;
 
+/**
+ * Filter to check if File is bigger then a certain size
+ */
 public class GreaterThan implements Filter {
 
 	/* Data members */

@@ -2,7 +2,7 @@ package filesprocessing.filters;
 import java.io.File;
 
 /**
- * Filter to check if File is bigger then a certain size
+ * Filter to check if File is hidden
  */
 public class Hidden implements Filter {
 

@@ -3,11 +3,11 @@ import java.io.File;
 import java.util.Comparator;
 
 /**
- * A singleton class, implements java's Comparator<File> interface.
+ * A singleton class, implements java's Comparator interface.
  * this singleton has one method - compare - which can be use to sort a
  * Data structure in a ABS order.
  *
- * @authors Gil Adam, Jonathan Zedaka
+ * @author Gil Adam, Jonathan Zedaka
  */
 public class AlphaOrder implements Comparator<File> {
 
