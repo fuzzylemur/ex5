@@ -21,7 +21,7 @@ public class Writable implements Filter {
     }
 
 	/**
-	 * apply filter to the given File object
+	 * Apply filter to the given File object
 	 *
 	 * @param file File to check
 	 * @return True if file satisfies filter, false otherwise
