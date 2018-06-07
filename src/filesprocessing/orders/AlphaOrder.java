@@ -18,7 +18,7 @@ public class AlphaOrder implements Comparator<File> {
 	private AlphaOrder(){}
 
 	/** @return the class one and only instance*/
-	public static AlphaOrder instance(){return myInstance;}
+	public static AlphaOrder instance() {return myInstance;}
 
 	/**
 	 * Compares the give 2 files according to their String name in ABS order.

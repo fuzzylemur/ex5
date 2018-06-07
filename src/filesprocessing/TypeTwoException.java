@@ -1,20 +1,20 @@
 package filesprocessing;
 
-/*
+/**
  * TypeTwoExceptions are thrown for IO problems with the command file, its format or invalid args.
  */
-class TypeTwoException extends Exception {
+public class TypeTwoException extends Exception {
 
 	/* Class Constants */
 	private static final String MSG = "ERROR: ";
     private String msgDetails;
     private static final long serialVersionUID = 1L;
 
-	/*
+	/**
 	 * Constructor, receives a string with details about the specific error
 	 * @param msgDetails error details
 	 */
-	TypeTwoException(String msgDetails){
+	public TypeTwoException(String msgDetails){
         this.msgDetails = msgDetails;
     }
 

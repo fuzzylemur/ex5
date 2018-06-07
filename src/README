@@ -31,8 +31,7 @@ package:    filesprocessing
                         Suffix
                         Writable
 
-    sub-package:    orders
-        interface:      FileOrder
+    sub-package:    orders              // implement Comparator<File>
         classes:        AlphaOrder
                         SizeOrder
                         TypeOrder
@@ -106,9 +105,15 @@ main method does not have to worry itself with TypeOneExceptions, which are warn
 running of the program. We were also pretty excited about having a singleton which is composed of two
 singletons (one of which also creates singletons OMG).
 
-filter/order: Interface vs abstract?
+All Filter classes implement the Filter interface, with each Filter implementing the 'checkFile' method
+according to the desired filtering to be done. Filtering a File array is done with the interface's default
+method 'filterFiles' which applies 'checkFile' to all the given Files and returns a filtered array. This
+allows for modularity and independence of all Filter objects, thus easing maintenance and debugging.
 
 =============================
 =          Sorting          =
 =============================
 
+Sorting the filtered file array is done by using Order objects that implement java's Comparator interface,
+each Order with the relevant values to compare. DirectoryProcessor then calls builtin 'sort' method on the
+ArrayList of Files (as a java collection) with the desired Order/comparator object.
