@@ -1,4 +1,5 @@
 package filesprocessing.filters;
+
 import java.io.File;
 import java.util.ArrayList;
 

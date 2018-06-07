@@ -3,14 +3,14 @@ package filesprocessing;
 import filesprocessing.filters.*;
 import filesprocessing.filters.Filter;
 
-/**
- * A singelton class, responisibale for validating and creating filter instances.
+/*
+ * A singleton class, responisibale for validating and creating filter instances.
  * It's main method, makeFilter(Section section), acts as a filter factory by
  * analyzing the String input and creating the apropriate filter.
  *
  * @authors Gil Adam, Jonathan Zedaka
  */
-public class FilterMaker {
+class FilterMaker {
 
 	//-------------------------Class Constants-------------------------------//
 	private static final String GREATER_THAN = "greater_than";

@@ -3,6 +3,9 @@ package filesprocessing;
 import filesprocessing.filters.*;
 import filesprocessing.orders.*;
 
+import java.io.File;
+import java.util.Comparator;
+
 /**
  * A singelton class, responisibale for processing and creating a section instance.
  * This single object holds a FilterMaker and OrderMaker objects and use them in order to
@@ -15,7 +18,7 @@ public class SectionProcessor {
 
 	//-------------------------Class Constants-------------------------------//
 	private static final Filter DEFAULT_FILTER = new All(false);
-	private static final FileOrder DEFAULT_ORDER = AlphaOrder.instance();
+	private static final Comparator<File> DEFAULT_ORDER = AlphaOrder.instance();
 
 	private static SectionProcessor myInstance = new SectionProcessor();
 

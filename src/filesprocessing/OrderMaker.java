@@ -2,6 +2,9 @@ package filesprocessing;
 
 import filesprocessing.orders.*;
 
+import java.io.File;
+import java.util.Comparator;
+
 /**
  * A singelton class, responisibale for validating and creating order instances.
  * It's main method, makeOrder(Section section), acts as a order factory by
@@ -36,7 +39,7 @@ public class OrderMaker {
 	 * @param section The section to create the order to.
 	 * @return a FileOrder instance according to the command file data.
 	 */
-	public FileOrder makeOrder(Section section) throws TypeOneException {
+	public Comparator<File> makeOrder(Section section) throws TypeOneException {
 
 		if (section.getOrderInput() == null) 			// If no order specified in command file
 			return AlphaOrder.instance();

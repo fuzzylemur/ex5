@@ -1,7 +1,9 @@
 package filesprocessing;
 
 import filesprocessing.filters.Filter;
-import filesprocessing.orders.*;
+
+import java.io.File;
+import java.util.Comparator;
 
 /*
  * Section object represent the different processing operations as defined in the command file, with
@@ -19,7 +21,7 @@ class Section {
 	private int[] lineNumbers;
 
 	private Filter myFilter;
-	private FileOrder myOrder;
+	private Comparator<File> myOrder;
 
 	/*
 	 * Constructor for the Section objects, receives input Strings for filter/order and their line numbers.
@@ -35,7 +37,7 @@ class Section {
 
 	/* Getters */
 	Filter getFilter() {return myFilter;}
-	FileOrder getOrder() {return myOrder;}
+	Comparator<File> getOrder() {return myOrder;}
 
 	String getFilterInput() {return filterInput;}
 	String getOrderInput() {return orderInput;}
@@ -48,7 +50,7 @@ class Section {
 
 	/* Setters */
 	void setFilter(Filter filter) {myFilter = filter;}
-	void setOrder(FileOrder order) {myOrder = order;}
+	void setOrder(Comparator<File> order) {myOrder = order;}
 	void setReverseOrder(boolean value) {reverseOrder = value;}
 
 
