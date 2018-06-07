@@ -1,22 +1,43 @@
 package filesprocessing.orders;
 import java.io.File;
+import java.util.Comparator;
 
-public class SizeOrder implements FileOrder {
+/**
+ * A singelton class, implements java's Comparator<File> interface.
+ * this Singelton has one method - compare - which can be use to sort a
+ * Data stracture according to the size of the files in it.
+ *
+ * @authors Gil Adam, Jonathan Zedaka
+ */
+public class SizeOrder implements Comparator<File> {
 
-    private static SizeOrder myInstance = new SizeOrder();
+	//-------------------------Class Constants-------------------------------//
+	private static SizeOrder myInstance = new SizeOrder();
 
-    private SizeOrder(){}
-    public static SizeOrder instance(){return myInstance;}
+	/* A private defualt constractor .*/
+	private SizeOrder(){}
 
-    public int compare(File file1, File file2){
+	/** @return the class one and only instance*/
+	public static SizeOrder instance(){return myInstance;}
 
-        int delta = (int)(file1.length() - file2.length());
+	/**
+	 * Compares the give 2 files according to their size.
+	 * If the size is equal we will compare according to ABS order.
+	 *
+	 * @param file1 the first file to compare.
+	 * @param file2 the second file to compare.
+	 * @return A negative integer, zero, or a positive integer as the first argument
+	 *         is less than, equal to, or greater than the second.
+	 */
+	public int compare(File file1, File file2){
 
-        if (delta == 0){
-            return file1.getName().compareTo(file2.getName());
-        }
+		int delta = (int)(file1.length() - file2.length());
 
-        else
-            return delta;
-    }
+		if (delta == 0){
+			return file1.getName().compareTo(file2.getName());
+		}
+
+		else
+			return delta;
+	}
 }
